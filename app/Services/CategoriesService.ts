@@ -16,7 +16,12 @@ class CategoriesService {
   }
 
   public async find(categoryId: number): Promise<Category | null> {
-    return Category.find(categoryId)
+    const category = await Category.find(categoryId)
+    if (category) {
+      await category.load('products')
+      return category
+    }
+    return null
   }
 
   public async insert(category: CategoryInsert): Promise<Category> {
@@ -24,7 +29,7 @@ class CategoriesService {
   }
 
   public async update(categoryId: number, category: CategoryUpdate): Promise<Category | null> {
-    const cat = await this.find(categoryId)
+    const cat = await Category.find(categoryId)
     if (cat) {
       return cat.merge(category).save()
     }
@@ -32,7 +37,7 @@ class CategoriesService {
   }
 
   public async delete(categoryId: number): Promise<boolean> {
-    const category = await this.find(categoryId)
+    const category = await Category.find(categoryId)
     if (category) {
       await category.delete()
       return true
