@@ -12,12 +12,7 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('products')
         .onDelete('CASCADE')
-      table
-        .integer('category_id')
-        .unsigned()
-        .references('id')
-        .inTable('categories')
-        .onDelete('CASCADE')
+      table.integer('category_id').unsigned().references('id').inTable('categories')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })
