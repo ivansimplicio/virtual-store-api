@@ -20,7 +20,7 @@ class CategoriesService {
   }
 
   public async insert(category: CategoryInsert): Promise<Category> {
-    return await Category.create(category)
+    return Category.create(category)
   }
 
   public async update(categoryId: number, category: CategoryUpdate): Promise<Category | null> {
