@@ -1,8 +1,13 @@
 import Category from 'App/Models/Category'
 
-type CategoryInput = {
+type CategoryInsert = {
   name: string
   description: string
+}
+
+type CategoryUpdate = {
+  name?: string
+  description?: string
 }
 
 class CategoriesService {
@@ -14,11 +19,11 @@ class CategoriesService {
     return Category.find(categoryId)
   }
 
-  public async insert(category: CategoryInput): Promise<Category> {
+  public async insert(category: CategoryInsert): Promise<Category> {
     return await Category.create(category)
   }
 
-  public async update(categoryId: number, category: CategoryInput): Promise<Category | null> {
+  public async update(categoryId: number, category: CategoryUpdate): Promise<Category | null> {
     const cat = await this.find(categoryId)
     if (cat) {
       return cat.merge(category).save()
