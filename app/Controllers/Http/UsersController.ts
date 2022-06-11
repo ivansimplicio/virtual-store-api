@@ -1,5 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UsersService from 'App/Services/UsersService'
+import CreateUser from 'App/Validators/CreateUserValidator'
+import UpdateUser from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
   public async index({ response }: HttpContextContract) {
@@ -8,7 +10,7 @@ export default class UsersController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const payload = request.only(['name', 'email', 'password', 'cpf', 'phoneNumber'])
+    const payload = await request.validate(CreateUser)
     const user = await UsersService.insert(payload)
     return response.created({ user })
   }
@@ -24,7 +26,7 @@ export default class UsersController {
 
   public async update({ request, response }: HttpContextContract) {
     const userId = request.param('id')
-    const payload = request.only(['name', 'email', 'password', 'cpf', 'phoneNumber'])
+    const payload = await request.validate(UpdateUser)
     const user = await UsersService.update(userId, payload)
     if (!user) {
       return response.notFound()
