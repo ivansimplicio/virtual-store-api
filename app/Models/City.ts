@@ -11,12 +11,17 @@ export default class City extends BaseModel {
   @column()
   public name: string
 
+  @column({ columnName: 'state_id' })
+  public stateId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo(() => State)
+  @belongsTo(() => State, {
+    foreignKey: 'stateId',
+  })
   public state: BelongsTo<typeof State>
 }
