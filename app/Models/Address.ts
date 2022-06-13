@@ -1,3 +1,4 @@
+import User from 'App/Models/User'
 import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import City from './City'
@@ -36,4 +37,9 @@ export default class Address extends BaseModel {
     foreignKey: 'cityId',
   })
   public city: BelongsTo<typeof City>
+
+  @belongsTo(() => User, {
+    foreignKey: 'userId',
+  })
+  public user: BelongsTo<typeof User>
 }
