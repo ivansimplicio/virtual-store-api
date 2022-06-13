@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import City from './City'
 
 export default class State extends BaseModel {
   public static table = 'states'
@@ -15,4 +16,7 @@ export default class State extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasMany(() => City)
+  public cities: HasMany<typeof City>
 }

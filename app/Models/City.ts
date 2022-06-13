@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import State from './State'
 
 export default class City extends BaseModel {
   public static table = 'cities'
@@ -15,4 +16,7 @@ export default class City extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => State)
+  public state: BelongsTo<typeof State>
 }
