@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import DeliveryAddress from './DeliveryAddress'
 
 export default class Order extends BaseModel {
   public static table = 'orders'
@@ -18,4 +19,9 @@ export default class Order extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasOne(() => DeliveryAddress, {
+    foreignKey: 'addressId',
+  })
+  public address: HasOne<typeof DeliveryAddress>
 }

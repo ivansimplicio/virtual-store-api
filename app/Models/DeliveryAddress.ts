@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import Order from './Order'
 
 export default class DeliveryAddress extends BaseModel {
   public static table = 'delivery_addresses'
@@ -30,4 +31,9 @@ export default class DeliveryAddress extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => Order, {
+    foreignKey: 'addressId',
+  })
+  public order: BelongsTo<typeof Order>
 }
