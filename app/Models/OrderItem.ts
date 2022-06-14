@@ -1,3 +1,4 @@
+import Product from 'App/Models/Product'
 import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Order from './Order'
@@ -33,4 +34,9 @@ export default class OrderItem extends BaseModel {
     foreignKey: 'orderId',
   })
   public order: BelongsTo<typeof Order>
+
+  @belongsTo(() => Product, {
+    foreignKey: 'productId',
+  })
+  public product: BelongsTo<typeof Product>
 }
