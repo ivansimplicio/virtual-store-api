@@ -6,6 +6,13 @@ type UserInsert = {
   password: string
   cpf: string
   phoneNumber: string
+  address: {
+    street: string
+    number?: string
+    district?: string
+    zipCode: string
+    cityId: number
+  }
 }
 
 type UserUpdate = {
@@ -25,13 +32,16 @@ class UsersService {
     const user = await User.find(userId)
     if (user) {
       await user.load('roles')
+      await user.load('adresses')
       return user
     }
     return null
   }
 
   public async insert(user: UserInsert): Promise<User> {
-    const createdUser = await User.create(user)
+    const { address, ...userData } = user
+    const createdUser = await User.create(userData)
+    await createdUser.related('adresses').create(address)
     await createdUser.related('roles').attach([2])
     return createdUser
   }
