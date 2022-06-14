@@ -1,7 +1,17 @@
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  HasMany,
+  hasMany,
+  HasOne,
+  hasOne,
+} from '@ioc:Adonis/Lucid/Orm'
 import DeliveryAddress from './DeliveryAddress'
+import OrderItem from './OrderItem'
 
 export default class Order extends BaseModel {
   public static table = 'orders'
@@ -30,4 +40,9 @@ export default class Order extends BaseModel {
     foreignKey: 'userId',
   })
   public user: BelongsTo<typeof User>
+
+  @hasMany(() => OrderItem, {
+    foreignKey: 'orderId',
+  })
+  public items: HasMany<typeof OrderItem>
 }
