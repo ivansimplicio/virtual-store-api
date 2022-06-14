@@ -4,7 +4,7 @@ import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import City from './City'
 
 export default class Address extends BaseModel {
-  public static table = 'address'
+  public static table = 'adresses'
 
   @column({ isPrimary: true })
   public id: number
@@ -21,11 +21,11 @@ export default class Address extends BaseModel {
   @column({ columnName: 'zip_code' })
   public zipCode: string
 
-  @column({ columnName: 'userId' })
-  public userId: string
+  @column({ columnName: 'user_id' })
+  public userId: number
 
   @column({ columnName: 'city_id' })
-  public cityId: string
+  public cityId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
