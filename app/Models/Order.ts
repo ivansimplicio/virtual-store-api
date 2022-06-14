@@ -19,6 +19,9 @@ export default class Order extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public amount: number
+
   @column({ columnName: 'user_id' })
   public userId: number
 
