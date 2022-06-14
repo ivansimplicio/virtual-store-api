@@ -32,7 +32,7 @@ class UsersService {
     const user = await User.find(userId)
     if (user) {
       await user.load('roles')
-      await user.load('adresses')
+      await user.load('addresses')
       return user
     }
     return null
@@ -41,7 +41,7 @@ class UsersService {
   public async insert(user: UserInsert): Promise<User> {
     const { address, ...userData } = user
     const createdUser = await User.create(userData)
-    await createdUser.related('adresses').create(address)
+    await createdUser.related('addresses').create(address)
     await createdUser.related('roles').attach([2])
     return createdUser
   }

@@ -44,5 +44,5 @@ export default class User extends BaseModel {
   @hasMany(() => Address, {
     foreignKey: 'userId',
   })
-  public adresses: HasMany<typeof Address>
+  public addresses: HasMany<typeof Address>
 }

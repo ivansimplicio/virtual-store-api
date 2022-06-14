@@ -4,7 +4,7 @@ import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import City from './City'
 
 export default class Address extends BaseModel {
-  public static table = 'adresses'
+  public static table = 'addresses'
 
   @column({ isPrimary: true })
   public id: number
