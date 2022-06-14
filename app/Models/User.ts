@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, HasMany, hasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Address from './Address'
+import Order from './Order'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -45,4 +46,9 @@ export default class User extends BaseModel {
     foreignKey: 'userId',
   })
   public addresses: HasMany<typeof Address>
+
+  @hasMany(() => Order, {
+    foreignKey: 'userId',
+  })
+  public orders: HasMany<typeof Order>
 }

@@ -1,5 +1,6 @@
+import User from 'App/Models/User'
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import DeliveryAddress from './DeliveryAddress'
 
 export default class Order extends BaseModel {
@@ -24,4 +25,9 @@ export default class Order extends BaseModel {
     foreignKey: 'addressId',
   })
   public address: HasOne<typeof DeliveryAddress>
+
+  @belongsTo(() => User, {
+    foreignKey: 'userId',
+  })
+  public user: BelongsTo<typeof User>
 }
