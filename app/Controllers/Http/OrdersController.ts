@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import OrdersService from 'App/Services/OrdersService'
+import CreateOrder from 'App/Validators/CreateOrderValidator'
 
 export default class OrdersController {
   public async index({ response }: HttpContextContract) {
@@ -18,7 +19,7 @@ export default class OrdersController {
 
   public async store({ request, response }: HttpContextContract) {
     const USER_ID = 2
-    const payload = request.only(['addressId', 'items'])
+    const payload = await request.validate(CreateOrder)
     const order = await OrdersService.store(USER_ID, payload)
     return response.ok({ order })
   }
