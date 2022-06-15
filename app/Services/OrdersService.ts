@@ -32,19 +32,12 @@ class OrdersService {
     if (!order) {
       return null
     }
-    await order.load((orderLoader) => {
-      orderLoader
-        .load('user')
-        .load('address')
-        .load('items', (itemsLoader) => {
-          itemsLoader.preload('product')
-        })
-    })
+    await this.loadOrderRelationships(order)
     return order
   }
 
   public async store(userId: number, orderInput: OrderInput): Promise<Order> {
-    const user = await this.loadUserInformation(userId)
+    const user = await this.loadUserAddress(userId)
     const address = await this.findUserAddress(orderInput.addressId, user)
     const items = await this.getOrderItems(orderInput.items)
     const order = await Order.create({
@@ -53,6 +46,11 @@ class OrdersService {
     })
     await order.related('address').create(this.getOrderDeliveryAddress(address))
     await order.related('items').createMany(items)
+    await this.loadOrderRelationships(order)
+    return order
+  }
+
+  private async loadOrderRelationships(order: Order): Promise<void> {
     await order.load((orderLoader) => {
       orderLoader
         .load('user')
@@ -61,10 +59,9 @@ class OrdersService {
           itemsLoader.preload('product')
         })
     })
-    return order
   }
 
-  private async loadUserInformation(userId: number): Promise<User> {
+  private async loadUserAddress(userId: number): Promise<User> {
     const user = await User.findOrFail(userId)
     await user.load('addresses', (query) => {
       query.preload('city', (query) => {
