@@ -25,14 +25,13 @@ type UserUpdate = {
 
 class UsersService {
   public async findAll(): Promise<User[]> {
-    return User.all()
+    return User.query().preload('roles')
   }
 
   public async find(userId: number): Promise<User | null> {
     const user = await User.find(userId)
     if (user) {
-      await user.load('roles')
-      await user.load('addresses')
+      await this.loadUserRelationships(user)
       return user
     }
     return null
@@ -43,6 +42,7 @@ class UsersService {
     const createdUser = await User.create(userData)
     await createdUser.related('addresses').create(address)
     await createdUser.related('roles').attach([2])
+    await this.loadUserRelationships(createdUser)
     return createdUser
   }
 
@@ -61,6 +61,16 @@ class UsersService {
       return true
     }
     return false
+  }
+
+  private async loadUserRelationships(user: User): Promise<void> {
+    await user.load((userLoader) => {
+      userLoader.load('roles').load('addresses', (query) => {
+        query.preload('city', (query) => {
+          query.preload('state')
+        })
+      })
+    })
   }
 }
 
