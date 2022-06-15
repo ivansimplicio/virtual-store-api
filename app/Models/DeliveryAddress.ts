@@ -26,6 +26,9 @@ export default class DeliveryAddress extends BaseModel {
   @column()
   public state: string
 
+  @column({ columnName: 'order_id' })
+  public orderId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -33,7 +36,7 @@ export default class DeliveryAddress extends BaseModel {
   public updatedAt: DateTime
 
   @belongsTo(() => Order, {
-    foreignKey: 'addressId',
+    foreignKey: 'orderId',
   })
   public order: BelongsTo<typeof Order>
 }
