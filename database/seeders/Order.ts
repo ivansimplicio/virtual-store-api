@@ -8,13 +8,11 @@ export default class OrderSeeder extends BaseSeeder {
       {
         id: 1,
         amount: 7998,
-        addressId: 1,
         userId: 2,
       },
       {
         id: 2,
         amount: 1495.24,
-        addressId: 2,
         userId: 3,
       },
     ])
