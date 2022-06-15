@@ -6,6 +6,7 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.dropForeign('address_id')
+      table.dropColumn('address_id')
     })
   }
 }
