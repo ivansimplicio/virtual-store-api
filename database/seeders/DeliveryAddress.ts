@@ -13,6 +13,7 @@ export default class DeliveryAddressSeeder extends BaseSeeder {
         zipCode: '58396000',
         city: 'Arara',
         state: 'Paraíba',
+        orderId: 1,
       },
       {
         id: 2,
@@ -22,6 +23,7 @@ export default class DeliveryAddressSeeder extends BaseSeeder {
         zipCode: '08465312',
         city: 'São Paulo',
         state: 'São Paulo',
+        orderId: 2,
       },
     ])
   }
