@@ -25,9 +25,6 @@ export default class Order extends BaseModel {
   @column({ columnName: 'user_id' })
   public userId: number
 
-  @column({ columnName: 'address_id' })
-  public addressId: number
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -35,7 +32,7 @@ export default class Order extends BaseModel {
   public updatedAt: DateTime
 
   @hasOne(() => DeliveryAddress, {
-    foreignKey: 'addressId',
+    foreignKey: 'orderId',
   })
   public address: HasOne<typeof DeliveryAddress>
 
