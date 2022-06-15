@@ -20,7 +20,7 @@ class ProductsService {
   public async find(productId: number): Promise<Product | null> {
     const product = await Product.find(productId)
     if (product) {
-      await product.load('categories')
+      await this.loadProductRelationships(product)
       return product
     }
     return null
@@ -29,6 +29,7 @@ class ProductsService {
   public async insert(product: ProductInsert): Promise<Product> {
     const createdProduct = await Product.create(product)
     await createdProduct.related('categories').attach(product.categories)
+    await this.loadProductRelationships(createdProduct)
     return createdProduct
   }
 
@@ -40,6 +41,7 @@ class ProductsService {
         await updatedProduct.related('categories').detach()
         await updatedProduct.related('categories').attach(product.categories)
       }
+      await this.loadProductRelationships(updatedProduct)
       return updatedProduct
     }
     return null
@@ -52,6 +54,10 @@ class ProductsService {
       return true
     }
     return false
+  }
+
+  private async loadProductRelationships(product: Product): Promise<void> {
+    await product.load('categories')
   }
 }
 
