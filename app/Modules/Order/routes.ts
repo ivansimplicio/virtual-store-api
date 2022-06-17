@@ -4,4 +4,6 @@ Route.group(() => {
   Route.get('/', 'OrdersController.index')
   Route.post('/', 'OrdersController.store')
   Route.get('/:id', 'OrdersController.show')
-}).prefix('orders')
+})
+  .prefix('orders')
+  .middleware('auth')
