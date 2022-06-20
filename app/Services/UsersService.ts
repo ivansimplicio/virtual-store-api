@@ -33,6 +33,7 @@ class UsersService {
     const user = await User.find(userId)
     if (user) {
       await this.loadUserRelationships(user)
+      await user.load('orders')
       return user
     }
     return null
