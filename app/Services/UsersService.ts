@@ -43,7 +43,7 @@ class UsersService {
     const { address, ...userData } = user
     const createdUser = await User.create(userData)
     await createdUser.related('addresses').create(address)
-    await createdUser.related('roles').attach([2])
+    await createdUser.related('roles').attach([Roles.CLIENT])
     await this.loadUserRelationships(createdUser)
     return createdUser
   }
@@ -77,7 +77,7 @@ class UsersService {
 
   public async userHasRole(user: User, role: Roles): Promise<boolean> {
     await user.load('roles')
-    return user.roles.some((element) => element.role === role)
+    return user.roles.some((element) => element.id === role)
   }
 }
 

@@ -1,3 +1,4 @@
+import Roles from 'App/Enums/Roles'
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import User from 'App/Models/User'
 
@@ -30,8 +31,8 @@ export default class UserSeeder extends BaseSeeder {
         phoneNumber: '1122223333',
       },
     ])
-    await users[0].related('roles').attach([1])
-    await users[1].related('roles').attach([1, 2])
-    await users[2].related('roles').attach([2])
+    await users[0].related('roles').attach([Roles.ADMIN])
+    await users[1].related('roles').attach([Roles.ADMIN, Roles.CLIENT])
+    await users[2].related('roles').attach([Roles.CLIENT])
   }
 }

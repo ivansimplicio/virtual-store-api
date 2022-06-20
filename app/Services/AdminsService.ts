@@ -1,3 +1,4 @@
+import Roles from 'App/Enums/Roles'
 import User from 'App/Models/User'
 
 type AdminInsert = {
@@ -11,7 +12,7 @@ type AdminInsert = {
 class AdminsService {
   public async insert(admin: AdminInsert): Promise<User> {
     const createdAdmin = await User.create(admin)
-    await createdAdmin.related('roles').attach([1])
+    await createdAdmin.related('roles').attach([Roles.ADMIN])
     await createdAdmin.load('roles')
     return createdAdmin
   }

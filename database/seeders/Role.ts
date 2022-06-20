@@ -1,3 +1,4 @@
+import Roles from 'App/Enums/Roles'
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Role from 'App/Models/Role'
 
@@ -6,11 +7,11 @@ export default class RoleSeeder extends BaseSeeder {
     const uniqueKey = 'role'
     await Role.updateOrCreateMany(uniqueKey, [
       {
-        id: 1,
+        id: Roles.ADMIN,
         role: 'ADMIN',
       },
       {
-        id: 2,
+        id: Roles.CLIENT,
         role: 'CLIENT',
       },
     ])
