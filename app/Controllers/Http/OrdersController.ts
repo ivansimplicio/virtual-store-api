@@ -19,11 +19,11 @@ export default class OrdersController {
     return response.ok({ order })
   }
 
-  public async store({ request, response, bouncer }: HttpContextContract) {
+  public async store({ auth, request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isClient')
-    const USER_ID = 2
+    const { id } = await auth.use('api').authenticate()
     const payload = await request.validate(CreateOrder)
-    const order = await OrdersService.store(USER_ID, payload)
+    const order = await OrdersService.store(id, payload)
     return response.ok({ order })
   }
 }
