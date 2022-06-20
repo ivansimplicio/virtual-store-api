@@ -1,6 +1,7 @@
 import '../App/Modules/Category/routes'
 import '../App/Modules/Product/routes'
 import '../App/Modules/User/routes'
+import '../App/Modules/Admin/routes'
 import '../App/Modules/State/routes'
 import '../App/Modules/Order/routes'
 
