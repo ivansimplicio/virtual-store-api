@@ -10,7 +10,7 @@ export default class OrdersController {
   }
 
   public async show({ request, response, bouncer }: HttpContextContract) {
-    const orderId = request.param('id')
+    const orderId = Number(request.param('id'))
     const order = await OrdersService.find(orderId)
     if (!order) {
       return response.notFound()

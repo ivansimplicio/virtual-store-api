@@ -17,7 +17,7 @@ export default class ProductsController {
   }
 
   public async show({ request, response }: HttpContextContract) {
-    const productId = request.param('id')
+    const productId = Number(request.param('id'))
     const product = await Service.find(productId)
     if (!product) {
       return response.notFound()
@@ -27,7 +27,7 @@ export default class ProductsController {
 
   public async update({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const productId = request.param('id')
+    const productId = Number(request.param('id'))
     const payload = await request.validate(UpdateProduct)
     const product = await Service.update(productId, payload)
     if (!product) {
@@ -38,7 +38,7 @@ export default class ProductsController {
 
   public async destroy({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const productId = request.param('id')
+    const productId = Number(request.param('id'))
     const result = await Service.delete(productId)
     if (!result) {
       return response.notFound()

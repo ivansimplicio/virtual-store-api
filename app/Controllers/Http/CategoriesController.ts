@@ -17,7 +17,7 @@ export default class CategoriesController {
   }
 
   public async show({ request, response }: HttpContextContract) {
-    const id = request.param('id')
+    const id = Number(request.param('id'))
     const category = await Service.find(id)
     if (!category) {
       return response.notFound()
@@ -27,7 +27,7 @@ export default class CategoriesController {
 
   public async update({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const categoryId = request.param('id')
+    const categoryId = Number(request.param('id'))
     const payload = await request.validate(UpdateCategory)
     const category = await Service.update(categoryId, payload)
     if (!category) {
@@ -38,7 +38,7 @@ export default class CategoriesController {
 
   public async destroy({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const categoryId = request.param('id')
+    const categoryId = Number(request.param('id'))
     const result = await Service.delete(categoryId)
     if (!result) {
       return response.notFound()
