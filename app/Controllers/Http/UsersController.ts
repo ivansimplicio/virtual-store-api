@@ -4,7 +4,8 @@ import CreateUser from 'App/Validators/CreateUserValidator'
 import UpdateUser from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
-  public async index({ response }: HttpContextContract) {
+  public async index({ response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const users = await UsersService.findAll()
     return response.ok({ users })
   }
@@ -15,8 +16,9 @@ export default class UsersController {
     return response.created({ user })
   }
 
-  public async show({ request, response }: HttpContextContract) {
-    const userId = request.param('id')
+  public async show({ request, response, bouncer }: HttpContextContract) {
+    const userId = Number(request.param('id'))
+    await bouncer.authorize('haveAccessToTheUser', userId)
     const user = await UsersService.find(userId)
     if (!user) {
       return response.notFound()
@@ -24,8 +26,9 @@ export default class UsersController {
     return response.ok({ user })
   }
 
-  public async update({ request, response }: HttpContextContract) {
-    const userId = request.param('id')
+  public async update({ request, response, bouncer }: HttpContextContract) {
+    const userId = Number(request.param('id'))
+    await bouncer.authorize('haveAccessToTheUser', userId)
     const payload = await request.validate(UpdateUser)
     const user = await UsersService.update(userId, payload)
     if (!user) {
@@ -34,8 +37,9 @@ export default class UsersController {
     return response.ok({ user })
   }
 
-  public async destroy({ request, response }: HttpContextContract) {
-    const userId = request.param('id')
+  public async destroy({ request, response, bouncer }: HttpContextContract) {
+    const userId = Number(request.param('id'))
+    await bouncer.authorize('haveAccessToTheUser', userId)
     const result = await UsersService.delete(userId)
     if (!result) {
       return response.notFound()

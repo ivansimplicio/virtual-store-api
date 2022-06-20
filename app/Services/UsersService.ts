@@ -1,3 +1,4 @@
+import Roles from 'App/Enums/Roles'
 import User from 'App/Models/User'
 
 type UserInsert = {
@@ -71,6 +72,11 @@ class UsersService {
         })
       })
     })
+  }
+
+  public async userHasRole(user: User, role: Roles): Promise<boolean> {
+    await user.load('roles')
+    return user.roles.some((element) => element.role === role)
   }
 }
 

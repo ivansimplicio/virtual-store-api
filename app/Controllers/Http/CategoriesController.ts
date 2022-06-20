@@ -9,7 +9,8 @@ export default class CategoriesController {
     return response.ok({ categories })
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const payload = await request.validate(CreateCategory)
     const category = await Service.insert(payload)
     return response.created({ category })
@@ -24,7 +25,8 @@ export default class CategoriesController {
     return response.ok({ category })
   }
 
-  public async update({ request, response }: HttpContextContract) {
+  public async update({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const categoryId = request.param('id')
     const payload = await request.validate(UpdateCategory)
     const category = await Service.update(categoryId, payload)
@@ -34,7 +36,8 @@ export default class CategoriesController {
     return response.ok({ category })
   }
 
-  public async destroy({ request, response }: HttpContextContract) {
+  public async destroy({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const categoryId = request.param('id')
     const result = await Service.delete(categoryId)
     if (!result) {

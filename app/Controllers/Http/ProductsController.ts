@@ -9,7 +9,8 @@ export default class ProductsController {
     return response.ok({ products })
   }
 
-  public async store({ request, response }: HttpContextContract) {
+  public async store({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const payload = await request.validate(CreateProduct)
     const product = await Service.insert(payload)
     return response.created({ product })
@@ -24,7 +25,8 @@ export default class ProductsController {
     return response.ok({ product })
   }
 
-  public async update({ request, response }: HttpContextContract) {
+  public async update({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const productId = request.param('id')
     const payload = await request.validate(UpdateProduct)
     const product = await Service.update(productId, payload)
@@ -34,7 +36,8 @@ export default class ProductsController {
     return response.ok({ product })
   }
 
-  public async destroy({ request, response }: HttpContextContract) {
+  public async destroy({ request, response, bouncer }: HttpContextContract) {
+    await bouncer.authorize('isAdmin')
     const productId = request.param('id')
     const result = await Service.delete(productId)
     if (!result) {
