@@ -16,7 +16,7 @@ export default class CreateAdminValidator {
       rules.cpfIsValid(),
       rules.unique({ table: 'users', column: 'cpf' }),
     ]),
-    phoneNumber: schema.string({ trim: true }, [rules.maxLength(20)]),
+    phoneNumber: schema.string.optional({ trim: true }, [rules.maxLength(20)]),
   })
 
   public messages: CustomMessages = {}

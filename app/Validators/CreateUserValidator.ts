@@ -16,7 +16,7 @@ export default class CreateUserValidator {
       rules.cpfIsValid(),
       rules.unique({ table: 'users', column: 'cpf' }),
     ]),
-    phoneNumber: schema.string({ trim: true }, [rules.maxLength(20)]),
+    phoneNumber: schema.string.optional({ trim: true }, [rules.maxLength(20)]),
     address: schema.object().members({
       street: schema.string({ trim: true }, [rules.minLength(5), rules.maxLength(100)]),
       number: schema.string.optional({ trim: true }, [rules.maxLength(10)]),
