@@ -8,7 +8,7 @@ export default class StatesController {
   }
 
   public async show({ request, response }: HttpContextContract) {
-    const stateId = Number(request.param('id'))
+    const stateId = request.param('id')
     const state = await State.find(stateId)
     if (!state) {
       return response.notFound()

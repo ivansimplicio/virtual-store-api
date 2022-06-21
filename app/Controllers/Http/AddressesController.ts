@@ -22,7 +22,7 @@ export default class AddressesController {
   public async show({ auth, request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isClient')
     const { id } = await auth.use('api').authenticate()
-    const addressId = Number(request.param('id'))
+    const addressId = request.param('id')
     const address = await AddressesService.find(id, addressId)
     if (!address) {
       return response.notFound()
@@ -33,7 +33,7 @@ export default class AddressesController {
   public async update({ auth, request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isClient')
     const { id } = await auth.use('api').authenticate()
-    const addressId = Number(request.param('id'))
+    const addressId = request.param('id')
     const payload = await request.validate(UpdateAddress)
     const address = await AddressesService.update(id, addressId, payload)
     if (!address) {
@@ -45,7 +45,7 @@ export default class AddressesController {
   public async destroy({ auth, request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isClient')
     const { id } = await auth.use('api').authenticate()
-    const addressId = Number(request.param('id'))
+    const addressId = request.param('id')
     const result = await AddressesService.delete(id, addressId)
     if (!result) {
       return response.notFound()
