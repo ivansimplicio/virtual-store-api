@@ -11,6 +11,6 @@ export default class WelcomeClient extends BaseMailer {
       .subject(`VS: Bem-vindo(a), ${this.name}`)
       .from(Env.get('SMTP_EMAIL_SENDER'))
       .to(this.email)
-      .htmlView('emails/welcome_client', { payload: { name: this.name, email: this.email } })
+      .htmlView('emails/welcome_client', { payload: { name: this.name } })
   }
 }
