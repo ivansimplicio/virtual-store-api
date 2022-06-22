@@ -1,4 +1,5 @@
 import Roles from 'App/Enums/Roles'
+import WelcomeClient from 'App/Mailers/WelcomeClient'
 import User from 'App/Models/User'
 
 type UserInsert = {
@@ -45,6 +46,7 @@ class UsersService {
     await createdUser.related('addresses').create(address)
     await createdUser.related('roles').attach([Roles.CLIENT])
     await this.loadUserRelationships(createdUser)
+    await new WelcomeClient(createdUser.name, createdUser.email).sendLater()
     return createdUser
   }
 
