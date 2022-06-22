@@ -7,7 +7,7 @@ type UserInsert = {
   email: string
   password: string
   cpf: string
-  phoneNumber: string
+  phoneNumber?: string
   address: {
     street: string
     number?: string

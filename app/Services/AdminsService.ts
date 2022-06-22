@@ -7,7 +7,7 @@ type AdminInsert = {
   email: string
   password: string
   cpf: string
-  phoneNumber: string
+  phoneNumber?: string
 }
 
 class AdminsService {
