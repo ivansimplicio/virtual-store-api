@@ -15,7 +15,6 @@ export default class UpdateUserValidator {
       rules.maxLength(100),
       rules.unique({ table: 'users', column: 'email', whereNot: { id: this.refs.userId } }),
     ]),
-    password: schema.string.optional({ trim: true }, [rules.minLength(8), rules.maxLength(30)]),
     cpf: schema.string.optional({ trim: true }, [
       rules.cpfIsValid(),
       rules.unique({ table: 'users', column: 'cpf', whereNot: { id: this.refs.userId } }),

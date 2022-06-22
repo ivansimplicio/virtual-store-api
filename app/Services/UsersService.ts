@@ -20,7 +20,6 @@ type UserInsert = {
 type UserUpdate = {
   name?: string
   email?: string
-  password?: string
   cpf?: string
   phoneNumber?: string
 }
