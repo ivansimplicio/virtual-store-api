@@ -25,7 +25,7 @@ export default class NewOrderEmail extends BaseMailer {
       order: {
         id: this.order.id,
         date: this.formatDate(this.order.createdAt),
-        amount: this.formaValue(this.order.amount),
+        amount: this.formatValue(this.order.amount),
         items: this.order.items,
         address: this.formatAddress(this.order.address),
       },
@@ -43,7 +43,7 @@ export default class NewOrderEmail extends BaseMailer {
     })
   }
 
-  private formaValue(value: number): string {
+  private formatValue(value: number): string {
     return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   }
 
