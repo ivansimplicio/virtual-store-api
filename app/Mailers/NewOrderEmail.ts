@@ -4,7 +4,7 @@ import Order from 'App/Models/Order'
 import Env from '@ioc:Adonis/Core/Env'
 import { BaseMailer, MessageContract } from '@ioc:Adonis/Addons/Mail'
 
-export default class NewOrder extends BaseMailer {
+export default class NewOrderEmail extends BaseMailer {
   constructor(private order: Order) {
     super()
   }

@@ -1,5 +1,5 @@
 import Roles from 'App/Enums/Roles'
-import WelcomeAdmin from 'App/Mailers/WelcomeAdmin'
+import WelcomeAdminEmail from 'App/Mailers/WelcomeAdminEmail'
 import User from 'App/Models/User'
 
 type AdminInsert = {
@@ -15,7 +15,7 @@ class AdminsService {
     const createdAdmin = await User.create(admin)
     await createdAdmin.related('roles').attach([Roles.ADMIN])
     await createdAdmin.load('roles')
-    await new WelcomeAdmin(createdAdmin.name, createdAdmin.email).sendLater()
+    await new WelcomeAdminEmail(createdAdmin.name, createdAdmin.email).sendLater()
     return createdAdmin
   }
 }

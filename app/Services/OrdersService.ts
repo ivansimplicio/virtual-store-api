@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 import Order from 'App/Models/Order'
 import InvalidAddress from 'App/Exceptions/InvalidAddressException'
 import Address from 'App/Models/Address'
-import NewOrder from 'App/Mailers/NewOrder'
+import NewOrderEmail from 'App/Mailers/NewOrderEmail'
 
 type OrderItem = {
   productId: number
@@ -48,7 +48,7 @@ class OrdersService {
     await order.related('address').create(this.getOrderDeliveryAddress(address))
     await order.related('items').createMany(items)
     await this.loadOrderRelationships(order)
-    await new NewOrder(order).sendLater()
+    await new NewOrderEmail(order).sendLater()
     return order
   }
 
