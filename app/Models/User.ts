@@ -6,12 +6,15 @@ import {
   column,
   HasMany,
   hasMany,
+  HasOne,
+  hasOne,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Address from './Address'
 import Order from './Order'
+import LinkToken from './LinkToken'
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -60,6 +63,11 @@ export default class User extends BaseModel {
     foreignKey: 'userId',
   })
   public orders: HasMany<typeof Order>
+
+  @hasOne(() => LinkToken, {
+    foreignKey: 'userId',
+  })
+  public linkToken: HasOne<typeof LinkToken>
 
   @beforeSave()
   public static async hashPassword(user: User) {

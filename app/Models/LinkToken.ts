@@ -1,5 +1,6 @@
+import User from 'App/Models/User'
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class LinkToken extends BaseModel {
   public static table = 'link_tokens'
@@ -10,7 +11,7 @@ export default class LinkToken extends BaseModel {
   @column()
   public token: string
 
-  @column()
+  @column({ columnName: 'user_id' })
   public userId: number
 
   @column.dateTime({ autoCreate: true })
@@ -18,4 +19,9 @@ export default class LinkToken extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @belongsTo(() => User, {
+    foreignKey: 'userId',
+  })
+  public user: BelongsTo<typeof User>
 }
