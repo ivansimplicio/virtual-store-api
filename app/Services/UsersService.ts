@@ -1,4 +1,5 @@
 import Roles from 'App/Enums/Roles'
+import AccountDeletionEmail from 'App/Mailers/AccountDeletionEmail'
 import WelcomeClientEmail from 'App/Mailers/WelcomeClientEmail'
 import User from 'App/Models/User'
 
@@ -61,6 +62,7 @@ class UsersService {
     const userFound = await User.find(userId)
     if (userFound) {
       await userFound.delete()
+      await new AccountDeletionEmail(userFound.name, userFound.email).sendLater()
       return true
     }
     return false
