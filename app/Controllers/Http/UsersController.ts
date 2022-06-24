@@ -6,9 +6,8 @@ import UpdateUser from 'App/Validators/UpdateUserValidator'
 export default class UsersController {
   public async index({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const page = request.input('page', 1)
-    const limit = request.input('limit', 10)
-    const users = await UsersService.findAll(page, limit)
+    const { page = 1, limit = 10, name = '' } = request.qs()
+    const users = await UsersService.findAll(page, limit, name)
     return response.ok({ users })
   }
 

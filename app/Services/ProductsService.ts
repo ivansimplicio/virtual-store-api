@@ -13,8 +13,10 @@ type ProductUpdate = {
 }
 
 class ProductsService {
-  public async findAll(page: number, limit: number): Promise<Product[]> {
-    return Product.query().paginate(page, limit)
+  public async findAll(page: number, limit: number, name: string): Promise<Product[]> {
+    return Product.query()
+      .withScopes((scopes) => scopes.findByLikeName(name))
+      .paginate(page, limit)
   }
 
   public async find(productId: number): Promise<Product | null> {

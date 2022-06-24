@@ -1,7 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  HasMany,
+  hasMany,
+  ManyToMany,
+  manyToMany,
+  ModelQueryBuilderContract,
+  scope,
+} from '@ioc:Adonis/Lucid/Orm'
 import Category from './Category'
 import OrderItem from './OrderItem'
+
+type Builder = ModelQueryBuilderContract<typeof Product>
 
 export default class Product extends BaseModel {
   public static table = 'products'
@@ -36,4 +47,8 @@ export default class Product extends BaseModel {
     foreignKey: 'productId',
   })
   public items: HasMany<typeof OrderItem>
+
+  public static findByLikeName = scope((query: Builder, name: string) => {
+    query.where('name', 'LIKE', `%${name}%`)
+  })
 }

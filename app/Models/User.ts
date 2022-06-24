@@ -10,11 +10,15 @@ import {
   hasOne,
   ManyToMany,
   manyToMany,
+  ModelQueryBuilderContract,
+  scope,
 } from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Address from './Address'
 import Order from './Order'
 import LinkToken from './LinkToken'
+
+type Builder = ModelQueryBuilderContract<typeof User>
 
 export default class User extends BaseModel {
   public static table = 'users'
@@ -75,4 +79,8 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password)
     }
   }
+
+  public static findByLikeName = scope((query: Builder, name: string) => {
+    query.where('name', 'LIKE', `%${name}%`)
+  })
 }
