@@ -4,9 +4,11 @@ import CreateUser from 'App/Validators/CreateUserValidator'
 import UpdateUser from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
-  public async index({ response, bouncer }: HttpContextContract) {
+  public async index({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const users = await UsersService.findAll()
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 10)
+    const users = await UsersService.findAll(page, limit)
     return response.ok({ users })
   }
 

@@ -24,8 +24,8 @@ type OrderInput = {
 }
 
 class OrdersService {
-  public async findAll(): Promise<Order[]> {
-    return Order.query().preload('user')
+  public async findAll(page: number, limit: number): Promise<Order[]> {
+    return Order.query().preload('user').paginate(page, limit)
   }
 
   public async find(orderId: number): Promise<Order | null> {

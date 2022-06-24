@@ -4,8 +4,10 @@ import CreateProduct from 'App/Validators/CreateProductValidator'
 import UpdateProduct from 'App/Validators/UpdateProductValidator'
 
 export default class ProductsController {
-  public async index({ response }: HttpContextContract) {
-    const products = await ProductsService.findAll()
+  public async index({ request, response }: HttpContextContract) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 10)
+    const products = await ProductsService.findAll(page, limit)
     return response.ok({ products })
   }
 

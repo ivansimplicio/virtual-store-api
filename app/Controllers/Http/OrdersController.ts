@@ -3,9 +3,11 @@ import OrdersService from 'App/Services/OrdersService'
 import CreateOrder from 'App/Validators/CreateOrderValidator'
 
 export default class OrdersController {
-  public async index({ response, bouncer }: HttpContextContract) {
+  public async index({ request, response, bouncer }: HttpContextContract) {
     await bouncer.authorize('isAdmin')
-    const orders = await OrdersService.findAll()
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 5)
+    const orders = await OrdersService.findAll(page, limit)
     return response.ok({ orders })
   }
 

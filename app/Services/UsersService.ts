@@ -26,8 +26,8 @@ type UserUpdate = {
 }
 
 class UsersService {
-  public async findAll(): Promise<User[]> {
-    return User.query().preload('roles')
+  public async findAll(page: number, limit: number): Promise<User[]> {
+    return User.query().preload('roles').paginate(page, limit)
   }
 
   public async find(userId: number): Promise<User | null> {
