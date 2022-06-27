@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "startdb": "node ace migration:run && node ace db:seed",
-    "dev": "node ace serve --watch",
+    "dev": "node ace serve --watch -p",
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
